@@ -92,66 +92,77 @@ Create A Semperis Purple Knight Vulnerability Scanning App In Entra ID OR Update
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms -createClientSecret
 ~~~~
 
+---
 Update An Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID With Updated API Permissions
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms
 ~~~~
 
+---
 Update An Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID With A New Client Secret (Existing Client Secrets WILL NOT Be Deleted!)
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -createClientSecret
 ~~~~
 
+---
 List All Existing Client Secrets On The Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -listAllClientSecrets
 ~~~~
 
+---
 Delete All Existing Client Secrets On The Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -deleteAllClientSecrets
 ~~~~
 
+---
 Delete An Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -deleteApp
 ~~~~
 
+---
 Create A Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID OR Update The Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID With Updated API Permissions And A New Client Secret (Existing Client Secrets WILL NOT Be Deleted!)
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms -createClientSecret
 ~~~~
 
+---
 Update An Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID With Updated API Permissions
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms
 ~~~~
 
+---
 Update An Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID With A New Client Secret (Existing Client Secrets WILL NOT Be Deleted!)
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -createOrUpdateApp -createClientSecret
 ~~~~
 
+---
 List All Existing Client Secrets On The Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -listAllClientSecrets
 ~~~~
 
+---
 Delete All Existing Client Secrets On The Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID
 
 ~~~~PowerShell
 .\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -createOrUpdateApp -deleteAllClientSecrets
 ~~~~
 
+---
 Delete An Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID
 
 ~~~~PowerShell
