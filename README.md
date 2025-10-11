@@ -8,13 +8,13 @@ See The File '[Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1](https
 
 ## DESCRIPTION
 
-This PoSH Script Creates The Application Registration In Entra ID For PK To Be Able To Scan For Vulnerabilities In Entra ID
+This PoSH Script Creates The Application Registration In Entra ID For PK Or DSP To Be Able To Scan For Vulnerabilities In Entra ID
 
 This PoSH script provides the following functions:
 
-* Create and update the Application Registration in Entra ID for PK To Be Able To Scan For Vulnerabilities In Entra ID;
+* Create and update the Application Registration in Entra ID for PK Or DSP To Be Able To Scan For Vulnerabilities In Entra ID;
 * Delete the Application Registration in Entra ID;
-* Assign the following MSFT Graph Application Permissions and consent those, when either creating or updating the app;
+* For PK Only: Assign the following MSFT Graph Application Permissions and consent those, when either creating or updating the app;
 ([System Requirements - Table 'Microsoft Entra ID connection requirements'](https://docs.purple-knight.com/community/purpleknight/pk-system-requirements.htm?tocpath=Purple%20Knight%7CPurple%20Knight%20User%20Guide%7CGetting%20Started%7C_____1))
   * AdministrativeUnit.Read.All
   * Application.Read.All
@@ -23,8 +23,10 @@ This PoSH script provides the following functions:
   * Directory.Read.All
   * GroupMember.Read.All
   * IdentityRiskyUser.Read.All
+  * MailboxSettings.Read
+  * OnPremDirectorySynchronization.Read.All
   * Organization.Read.All
-  * Policy.Read.All
+  * olicy.Read.All
   * PrivilegedAccess.Read.AzureAD
   * PrivilegedEligibilitySchedule.Read.AzureADGroup
   * Reports.Read.All
@@ -33,7 +35,16 @@ This PoSH script provides the following functions:
   * RoleManagement.Read.Directory
   * User.Read.All
   * UserAuthenticationMethod.Read.All
-* Create an client secret that by default is valid for an hour, when either creating or updating the app. If needed it is possible to provide a customer lifetime in days for the client secret. This is not recommended as it may be a security issue;
+* For DSP Only: Assign the following MSFT Graph Application Permissions and consent those, when either creating or updating the app
+    (SOURCE: See DSP Documentation)
+  * Application.ReadWrite.All
+  * Directory.ReadWrite.All
+  * Group.ReadWrite.All
+  * RoleManagement.ReadWrite.Directory
+  * User.ReadWrite.All
+* For DSP Only: Add the application service principal to the Directory Writers role (https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#directory-writers)
+* For PK Only: Create an client secret that by default is valid for an hour, when either creating or updating the app. If needed it is possible to provide a customer lifetime in days for the client secret. This is not recommended as it may be a security issue;
+* For DSP Only: Create an client secret that by default is valid for 365 days, when either creating or updating the app. If needed it is possible to provide a custom lifetime in days for the client secret.
 * Deleting all client secrets from the Application Registration in Entra ID;
 * Display the tenant ID, the application ID, the assigned and consented permissions, and the client secret to be used in the Purple Knight Application.
 
@@ -48,14 +59,15 @@ This PoSH script provides the following functions:
 
 ## MANDATORY PARAMETERS
 
-* tenantFQDN => With his Parameter, You Can Specify The Tenant FQDN To Target The Entra ID Tenant To create The Application Registration In;
-* appRegDisplayName => With his Parameter, You Can Specify The Name For The Application Registration;
+* smprsSolution => With This Parameter, You Can Specify Which Semperis Solution To Target.
+* tenantFQDN => With This Parameter, You Can Specify The Tenant FQDN To Target The Entra ID Tenant To create The Application Registration In;
+* appRegDisplayName => With This Parameter, You Can Specify The Name For The Application Registration;
 
 ----
 
 ## OPTIONAL PARAMETERS
 
-* customLifetimeSecretInDays => With his Parameter, You Can Specify The Custom Lifetime Of The Client Secret In Days;
+* customLifetimeSecretInDays => With This Parameter, You Can Specify The Custom Lifetime Of The Client Secret In Days;
 
 ----
 
@@ -74,58 +86,93 @@ This PoSH script provides the following functions:
 
 ## EXAMPLES
 
-Create A Purple Knight Vulnerability Scanning App In Entra ID OR Update The Purple Knight Vulnerability Scanning App In Entra ID With Updated API Permissions And A New Client Secret (Existing Client Secrets WILL NOT Be Deleted!)
+Create A Semperis Purple Knight Vulnerability Scanning App In Entra ID OR Update The Semperis Purple Knight Vulnerability Scanning App In Entra ID With Updated API Permissions And A New Client Secret (Existing Client Secrets WILL NOT Be Deleted!)
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms -createClientSecret
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms -createClientSecret
 ~~~~
 
-Update An Existing Purple Knight Vulnerability Scanning App In Entra ID With Updated API Permissions
+Update An Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID With Updated API Permissions
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms
 ~~~~
 
-Update An Existing Purple Knight Vulnerability Scanning App In Entra ID With A New Client Secret (Existing Client Secrets WILL NOT Be Deleted!)
+Update An Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID With A New Client Secret (Existing Client Secrets WILL NOT Be Deleted!)
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -createClientSecret
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -createClientSecret
 ~~~~
 
-List All Existing Client Secrets On The Existing Purple Knight Vulnerability Scanning App In Entra ID
+List All Existing Client Secrets On The Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -listAllClientSecrets
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -listAllClientSecrets
 ~~~~
 
-Delete All Existing Client Secrets On The Existing Purple Knight Vulnerability Scanning App In Entra ID
+Delete All Existing Client Secrets On The Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -deleteAllClientSecrets
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -deleteAllClientSecrets
 ~~~~
 
-Delete An Existing Purple Knight Vulnerability Scanning App In Entra ID
+Delete An Existing Semperis Purple Knight Vulnerability Scanning App In Entra ID
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -deleteApp
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -deleteApp
+~~~~
+
+Create A Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID OR Update The Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID With Updated API Permissions And A New Client Secret (Existing Client Secrets WILL NOT Be Deleted!)
+
+~~~~PowerShell
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms -createClientSecret
+~~~~
+
+Update An Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID With Updated API Permissions
+
+~~~~PowerShell
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms
+~~~~
+
+Update An Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID With A New Client Secret (Existing Client Secrets WILL NOT Be Deleted!)
+
+~~~~PowerShell
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -createOrUpdateApp -createClientSecret
+~~~~
+
+List All Existing Client Secrets On The Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID
+
+~~~~PowerShell
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -listAllClientSecrets
+~~~~
+
+Delete All Existing Client Secrets On The Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID
+
+~~~~PowerShell
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -createOrUpdateApp -deleteAllClientSecrets
+~~~~
+
+Delete An Existing Semperis Directory Services Protector Change Management And Vulnerability Scanning App In Entra ID
+
+~~~~PowerShell
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution DSP -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Directory Services Protector Change Management And Vulnerability Scanning App" -deleteApp
 ~~~~
 
 ----
 
 ## NOTES
 
-* Requires Microsoft Graph PoSH Module to connect to Azure AD and perform all actions, except consenting API permissions;
-* Requires Az.Accounts PoSH Module to be able to consent the API permissions;
-* To create, configure AND consent application permissions for the Microsoft Graph, at least membership of the "Global Administrator" built-in role is required;
-* To create and configure (without assigning and consenting application permissions for the Microsoft Graph), at least membership of the "Application Administrator" or "Cloud Application Administrator" built-in role is required;
-* To create a new client secret, at least application ownership is required of the existing application.
+* Requires PSMSALNet Module (https://github.com/SCOMnewbie/PSMSALNet) to authenticate against Entra ID for all action performed by the script
+* To create, configure AND consent application permissions for the Microsoft Graph, at least membership of the "Global Administrator" built-in role is required
+* To create and configure (without assigning and consenting application permissions for the Microsoft Graph), at least membership of the "Application Administrator" or "Cloud Application Administrator" built-in role is required
+* To create a new client secret, at least application ownership is required of the existing application
 
 ----
 
 ## SAMPLE OUTPUT 1 - PICTURE BELOW
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms -createClientSecret
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms -createClientSecret
 ~~~~
 
 * Purple Knight Vulnerability Scanning App In Entra ID DOES NOT Yet Exist
@@ -140,7 +187,7 @@ Delete An Existing Purple Knight Vulnerability Scanning App In Entra ID
 ## SAMPLE OUTPUT 2 - PICTURE BELOW
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms -createClientSecret
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -updateAPIPerms -createClientSecret
 ~~~~
 
 * Purple Knight Vulnerability Scanning App In Entra ID ALREADY Exists
@@ -154,7 +201,7 @@ Delete An Existing Purple Knight Vulnerability Scanning App In Entra ID
 ## SAMPLE OUTPUT 3 - PICTURE BELOW
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -createClientSecret
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -createClientSecret
 ~~~~
 
 * Purple Knight Vulnerability Scanning App In Entra ID ALREADY Exists
@@ -167,7 +214,7 @@ Delete An Existing Purple Knight Vulnerability Scanning App In Entra ID
 ## SAMPLE OUTPUT 4 - PICTURE BELOW
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -listAllClientSecrets
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -listAllClientSecrets
 ~~~~
 
 * Purple Knight Vulnerability Scanning App In Entra ID ALREADY Exists
@@ -180,7 +227,7 @@ Delete An Existing Purple Knight Vulnerability Scanning App In Entra ID
 ## SAMPLE OUTPUT 5 - PICTURE BELOW
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -deleteAllClientSecrets
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -createOrUpdateApp -deleteAllClientSecrets
 ~~~~
 
 * Purple Knight Vulnerability Scanning App In Entra ID ALREADY Exists
@@ -193,7 +240,7 @@ Delete An Existing Purple Knight Vulnerability Scanning App In Entra ID
 ## SAMPLE OUTPUT 6 - PICTURE BELOW
 
 ~~~~PowerShell
-.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -deleteApp
+.\Create-Update-Delete-EID-PK-Vulnerability-Scanning-App.ps1 -smprsSolution PK -tenantFQDN XXX.ONMICROSOFT.COM -appRegDisplayName "Semperis Purple Knight Vulnerability Scanning App" -deleteApp
 ~~~~
 
 * Deleting The Existing Purple Knight Vulnerability Scanning App From Entra ID
