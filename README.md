@@ -26,7 +26,7 @@ This PoSH script provides the following functions:
   * MailboxSettings.Read
   * OnPremDirectorySynchronization.Read.All
   * Organization.Read.All
-  * olicy.Read.All
+  * Policy.Read.All
   * PrivilegedAccess.Read.AzureAD
   * PrivilegedEligibilitySchedule.Read.AzureADGroup
   * Reports.Read.All
